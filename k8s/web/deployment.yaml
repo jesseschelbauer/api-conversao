@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conversao
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: conversao
+  template:
+    metadata:
+      labels:
+        app: conversao
+    spec:
+      containers:
+        - name: conversao
+          image: schelbauer/api-conversao:v1
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: conversao-service
+spec:
+  selector:
+    app: conversao
+  ports:
+  - port: 80
+    targetPort: 8080
+    nodePort: 30000
+  type: NodePort

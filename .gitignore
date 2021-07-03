@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Locustt pyton files
+__pycache__/
